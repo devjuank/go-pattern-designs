@@ -1,10 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"sync"
-	"time"
 )
 
 func Fibonacci(n int) int {
@@ -51,6 +48,7 @@ func NewCache(f Function) *Memory {
 	}
 }
 
+/*
 func main() {
 	cache := NewCache(GetFibonacci)
 	fibo := []int{42, 40, 41, 42, 38}
@@ -70,3 +68,4 @@ func main() {
 	}
 	wg.Wait()
 }
+*/
