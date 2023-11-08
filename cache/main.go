@@ -22,7 +22,7 @@ func (m *Memory) Get(key int) (interface{}, error) {
 		m.lock.Lock()
 		result.value, result.err = m.f(key)
 		m.cache[key] = result
-		m.lock.Lock()
+		m.lock.Unlock()
 	}
 	return result.value, result.err
 }
