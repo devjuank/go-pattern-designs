@@ -32,8 +32,8 @@ func (s *Service) Work(job int) {
 		fmt.Printf("Waiting for Response job: %d\n", job)
 		resp := <-response
 		fmt.Printf("Response Done, received %d\n", resp)
+		return
 	}
-
 	s.Lock.RUnlock()
 
 	s.Lock.Lock()
@@ -51,9 +51,8 @@ func (s *Service) Work(job int) {
 		for _, pendingWorker := range pendingWorkers {
 			pendingWorker <- result
 		}
-		fmt.Printf("Result sent - all pending workers ready job: %d\n", job)
+		fmt.Printf("Result sent - all pending workers ready job:%d\n", job)
 	}
-
 	s.Lock.Lock()
 	s.InProgress[job] = false
 	s.IsPending[job] = make([]chan int, 0)
