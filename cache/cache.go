@@ -13,14 +13,14 @@ func ExpensiveFibonacci(n int) int {
 }
 
 type Service struct {
-	InPogress map[int]bool
-	IsPending map[int][]chan int
-	Lock      sync.RWMutex
+	InProgress map[int]bool
+	IsPending  map[int][]chan int
+	Lock       sync.RWMutex
 }
 
 func (s *Service) Work(job int) {
 	s.Lock.RLock()
-	exists := s.InPogress[job]
+	exists := s.InProgress[job]
 	if exists {
 		s.Lock.RUnlock()
 		response := make(chan int)
@@ -37,7 +37,7 @@ func (s *Service) Work(job int) {
 	s.Lock.RUnlock()
 
 	s.Lock.Lock()
-	s.InPogress[job] = true
+	s.InProgress[job] = true
 	s.Lock.Unlock()
 
 	fmt.Printf("Calculate Fibonacci for %d\n", job)
@@ -55,15 +55,15 @@ func (s *Service) Work(job int) {
 	}
 
 	s.Lock.Lock()
-	s.InPogress[job] = false
+	s.InProgress[job] = false
 	s.IsPending[job] = make([]chan int, 0)
 	s.Lock.Unlock()
 }
 
 func NewService() *Service {
 	return &Service{
-		InPogress: make(map[int]bool),
-		IsPending: make(map[int][]chan int),
+		InProgress: make(map[int]bool),
+		IsPending:  make(map[int][]chan int),
 	}
 }
 
