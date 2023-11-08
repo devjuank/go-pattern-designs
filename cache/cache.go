@@ -29,9 +29,9 @@ func (s *Service) Work(job int) {
 		s.Lock.Lock()
 		s.IsPending[job] = append(s.IsPending[job], response)
 		s.Lock.Unlock()
-		fmt.Printf("Waiting for response job: %d\n", job)
+		fmt.Printf("Waiting for Response job: %d\n", job)
 		resp := <-response
-		fmt.Printf("Response Done, received: %d\n", resp)
+		fmt.Printf("Response Done, received %d\n", resp)
 	}
 
 	s.Lock.RUnlock()
